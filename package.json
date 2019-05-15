@@ -2,7 +2,15 @@
   "name": "liri-node-app",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "liri.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chalk": "^2.4.2",
+    "dotenv": "^8.0.0",
+    "moment": "^2.24.0",
+    "node-spotify-api": "^1.1.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,11 +24,5 @@
   "bugs": {
     "url": "https://github.com/fabienmp/liri-node-app/issues"
   },
-  "homepage": "https://github.com/fabienmp/liri-node-app#readme",
-  "dependencies": {
-    "axios": "^0.18.0",
-    "dotenv": "^8.0.0",
-    "moment": "^2.24.0",
-    "node-spotify-api": "^1.1.1"
-  }
+  "homepage": "https://github.com/fabienmp/liri-node-app#readme"
 }
