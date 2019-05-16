@@ -14,10 +14,14 @@ This project is a simple LIRI Bot. LIRI is a Language Interpretation and Recogni
 
 This particular instruction provides the user with all the available commands and their respective format.
 
+![-help](https://github.com/fabienmp/liri-node-app/blob/master/Screenshots/help%20command.PNG?raw=true)
+
 ### do-what-it-says
 
 This command can be use to read a batch of instructions from the file 'random.txt' in the root folder. 
 There should not be more than one instruction per line.
+
+![do-what-it-says](https://github.com/fabienmp/liri-node-app/blob/master/Screenshots/do-what-it-says%20command.PNG?raw=true)
 
 ### concert-this
 
@@ -27,6 +31,8 @@ This command takes in one parameter, an artist/band name. This will search the B
 * Venue location
 * Date of the Event (use moment to format this as "MM/DD/YYYY")
 
+![concert-this](https://github.com/fabienmp/liri-node-app/blob/master/Screenshots/concert-this%20command.PNG?raw=true)
+
 ###  spotify-this-song
 
 This command takes in one parameter, a song title. This will search the Spotify API and returns the following data:
@@ -35,6 +41,8 @@ This command takes in one parameter, a song title. This will search the Spotify 
 * The song's name
 * A preview link of the song from Spotify
 * The album that the song is from
+
+![-help](https://github.com/fabienmp/liri-node-app/blob/master/Screenshots/spotify-this-song%20command.PNG?raw=true)
 
 ###  movie-this
 
@@ -48,6 +56,8 @@ This command takes in one parameter, a movie name. This will search the OMDB API
 * Language of the movie.
 * Plot of the movie.
 * Actors in the movie.
+
+![-help](https://github.com/fabienmp/liri-node-app/blob/master/Screenshots/movie-this%20command.PNG?raw=true)
 
 ## Packages Used
 
@@ -75,3 +85,5 @@ At the moment, the configuration file is only compatible with VS Code (https://c
 ## Author
 
 Fabien Mansoubi - https://github.com/fabienmp
+
+
