@@ -176,10 +176,10 @@ var dispatchCommand = function (userCommand, userCommandParam, callBack) {
             for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
 
                 if (lines[lineIndex].split(',').length == 1) {
-                    instruction = lines[lineIndex].split(',')[0];
+                    instruction = lines[lineIndex].split(',')[0].replaceAll('\r', '');
                 } else if (lines[lineIndex].split(',').length == 2) {
-                    instruction = lines[lineIndex].split(',')[0];
-                    param = lines[lineIndex].split(',')[1].replaceAll('"', '');
+                    instruction = lines[lineIndex].split(',')[0].replaceAll('\r', '');
+                    param = lines[lineIndex].split(',')[1].replaceAll('"', '').replaceAll('\r', '');
                 }
 
                 if (validCommands.indexOf(instruction) > -1) {
