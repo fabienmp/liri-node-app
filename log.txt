@@ -153,3 +153,52 @@
 {"message":"* Name of the venue: SLANE CASTLE","level":"info"}
 {"message":"* Venue location: Co. Meath, Ireland","level":"info"}
 {"message":"* Date of the Event: 06/08/2019","level":"info"}
+{"message":"Command: \u001b[94m-help\u001b[39m","level":"info"}
+{"message":"Valid commands are: \r","level":"info"}
+{"message":"concert-this <artist/band name here>","level":"info"}
+{"message":"spotify-this-song<song name here>","level":"info"}
+{"message":"movie-this <movie name here>","level":"info"}
+{"message":"do-what-it-says","level":"info"}
+{"message":"Command: \u001b[94mconcert-this\u001b[39m","level":"info"}
+{"message":"Param: \u001b[94mmetallica\u001b[39m","level":"info"}
+{"message":"\r -- Searching OMDB for artist 'metallica' -- \r","level":"info"}
+{"message":"* Name of the venue: SLANE CASTLE","level":"info"}
+{"message":"* Venue location: Co. Meath, Ireland","level":"info"}
+{"message":"* Date of the Event: 06/08/2019","level":"info"}
+{"message":"Command: \u001b[94mmovie-this\u001b[39m","level":"info"}
+{"message":"Param: \u001b[94malien\u001b[39m","level":"info"}
+{"message":"\r -- Searching OMDB for movie 'alien' -- \r","level":"info"}
+{"message":"* Title: Alien","level":"info"}
+{"message":"* Release Year: 1979","level":"info"}
+{"message":"* IMDB Rating: 8.5/10","level":"info"}
+{"message":"* Rotten Tomatoes Rating: 97%","level":"info"}
+{"message":"* Country: UK, USA","level":"info"}
+{"message":"* Language: English","level":"info"}
+{"message":"* Plot: After a space merchant vessel perceives an unknown transmission as a distress call, its landing on the source moon finds one of the crew attacked by a mysterious lifeform, and they soon realize that its life cycle has merely begun.","level":"info"}
+{"message":"* Actors: Tom Skerritt, Sigourney Weaver, Veronica Cartwright, Harry Dean Stanton","level":"info"}
+{"message":"Command: \u001b[94mspotify-this-song\u001b[39m","level":"info"}
+{"message":"Param: \u001b[94mfatty boom boom\u001b[39m","level":"info"}
+{"message":"\r -- Searching Spotify DB for track 'fatty boom boom' -- \r","level":"info"}
+{"message":"* Artist: Die Antwoord","level":"info"}
+{"message":"* Song Name: Fatty Boom Boom","level":"info"}
+{"message":"* Preview URL: https://p.scdn.co/mp3-preview/7daa2a002c9a220ce56f4b60212a01300e5d07fe?cid=950f847e97964c7b8a87ab2558728e49","level":"info"}
+{"message":"* Album: Ten$ion","level":"info"}
+{"message":"Command: \u001b[94mdo-what-it-says\u001b[39m","level":"info"}
+{"message":"\r -- Searching Spotify DB for track 'I Want it That Way' -- \r","level":"info"}
+{"message":"\r -- Searching OMDB for movie 'Alien' -- \r","level":"info"}
+{"message":"\r -- Searching OMDB for artist 'Metallica' -- \r","level":"info"}
+{"message":"* Title: Alien","level":"info"}
+{"message":"* Release Year: 1979","level":"info"}
+{"message":"* IMDB Rating: 8.5/10","level":"info"}
+{"message":"* Rotten Tomatoes Rating: 97%","level":"info"}
+{"message":"* Country: UK, USA","level":"info"}
+{"message":"* Language: English","level":"info"}
+{"message":"* Plot: After a space merchant vessel perceives an unknown transmission as a distress call, its landing on the source moon finds one of the crew attacked by a mysterious lifeform, and they soon realize that its life cycle has merely begun.","level":"info"}
+{"message":"* Actors: Tom Skerritt, Sigourney Weaver, Veronica Cartwright, Harry Dean Stanton","level":"info"}
+{"message":"* Artist: Backstreet Boys","level":"info"}
+{"message":"* Song Name: I Want It That Way","level":"info"}
+{"message":"* Preview URL: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=950f847e97964c7b8a87ab2558728e49","level":"info"}
+{"message":"* Album: The Hits--Chapter One","level":"info"}
+{"message":"* Name of the venue: SLANE CASTLE","level":"info"}
+{"message":"* Venue location: Co. Meath, Ireland","level":"info"}
+{"message":"* Date of the Event: 06/08/2019","level":"info"}
