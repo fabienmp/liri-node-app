@@ -1,6 +1,8 @@
 require("dotenv").config();
 var keys = require("./keys.js");
 
+var axios = require('axios');
+const moment = require('moment')
 const chalk = require('chalk');
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
@@ -57,5 +59,52 @@ if (userCommand == 'spotify-this-song') {
         })
         .catch(function (err) {
             console.log(err);
+        });
+}
+
+if (userCommand == 'concert-this') {
+    if (userCommandParam == null || userCommandParam == '') {
+        userCommandParam = 'The Sign Ace Of Base';
+    }
+    axios.get('https://rest.bandsintown.com/artists/' + userCommandParam + '/events?app_id=codingbootcamp', {})
+        .then(function (response) {
+            console.log(response);
+            if (response != null && response.data.length > 0) {
+                var eventObject = response.data[0];
+                console.log('* Name of the venue: ' + chalk.yellow(eventObject.venue.name));
+                console.log('* Venue location: ' + chalk.yellow(eventObject.venue.city + ", " + eventObject.venue.country));
+                console.log('* Date of the Event: ' + chalk.yellow(moment(eventObject.datetime).format("MM/DD/YYYY")));
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+if (userCommand == 'movie-this') {
+    if (userCommandParam == null || userCommandParam == '') {
+        userCommandParam = 'Mr. Nobody';
+    }
+    axios.get('http://www.omdbapi.com/?t=' + userCommandParam + "&apikey=trilogy", {
+            "t": userCommandParam,
+            "apikey": 'trilogy'
+        })
+        .then(function (response) {
+            //console.log(response);
+            if (response != null && response.data != null) {
+                var movieObject = response.data;
+                console.log('* Title: ' + chalk.yellow(movieObject.Title));
+                console.log('* Release Year: ' + chalk.yellow(movieObject.Year));
+                console.log('* IMDB Rating: ' + chalk.yellow(movieObject.Ratings[0].Value));
+                console.log('* Rotten Tomatoes Rating: ' + chalk.yellow(movieObject.Ratings[1].Value));
+                console.log('* Country: ' + chalk.yellow(movieObject.Country));
+                console.log('* Language: ' + chalk.yellow(movieObject.Language));
+                console.log('* Plot: ' + chalk.yellow(movieObject.Plot));
+                console.log('* Actors: ' + chalk.yellow(movieObject.Actors));
+
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
         });
 }
