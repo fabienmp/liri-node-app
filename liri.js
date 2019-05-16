@@ -8,68 +8,25 @@ const chalk = require('chalk');
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 
-var validCommands = ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says', '-help']
-var userCommand = '';
-var userCommandParam = '';
+var validCommands = ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says', '-help'];
 
-process.argv.forEach(function (val, index, array) {
-    if (index == 2) {
-        userCommand = val;
-        if (validCommands.indexOf(userCommand) == -1) {
-            console.log(chalk.red('Oops! The command you chose is not valid. Use -help command to see available commands.'));
-            process.exit();
-        }
-        console.log('Command: ' + chalk.blue(userCommand));
-    }
-    if (index == 3) {
-        userCommandParam = val;
-        console.log('Param: ' + chalk.blue(userCommandParam));
-    }
-});
+String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 
-if (userCommand == '-help') {
-    console.log('Valid commands are: \r');
-    console.log(chalk.yellow('concert-this') + ' <artist/band name here>');
-    console.log(chalk.yellow('spotify-this-song') + '<song name here>');
-    console.log(chalk.yellow('movie-this') + ' <movie name here>');
-    console.log(chalk.yellow('do-what-it-says'));
-}
-
-if (userCommand == 'do-what-it-says') {
-    fs.readFile('random.txt', "utf8", function (err, data) {
-
-        var lines = data.split('\n');
-        var instruction = '';
-        var param = '';
-
-        for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-
-            if (lines[lineIndex].split(',').length == 1) {
-                instruction = lines[lineIndex].split(',')[0];
-            } else if (lines[lineIndex].split(',').length == 2) {
-                instruction = lines[lineIndex].split(',')[0];
-                param = lines[lineIndex].split(',')[1];
-            }
-
-            if (validCommands.indexOf(instruction) > -1) {
-
-            }
-
-        }
-    });
-}
-
-
-
-var processBandsInTown = function (param) {
-    axios.get('https://rest.bandsintown.com/artists/' + userCommandParam + '/events?app_id=codingbootcamp', {})
+var processBandsInTown = function (commandParam, callBack) {
+    axios.get('https://rest.bandsintown.com/artists/' + commandParam + '/events?app_id=codingbootcamp', {})
         .then(function (response) {
-            console.log(response);
+            //console.log(response);
             if (response != null && response.data.length > 0) {
                 var eventObject = response.data[0];
                 console.log('* Name of the venue: ' + chalk.yellow(eventObject.venue.name));
                 console.log('* Venue location: ' + chalk.yellow(eventObject.venue.city + ", " + eventObject.venue.country));
                 console.log('* Date of the Event: ' + chalk.yellow(moment(eventObject.datetime).format("MM/DD/YYYY")));
+            }
+            if (callBack != null) {
+                callBack();
             }
         })
         .catch(function (error) {
@@ -77,9 +34,9 @@ var processBandsInTown = function (param) {
         });
 }
 
-var processOMDB = function (param) {
-    axios.get('http://www.omdbapi.com/?t=' + userCommandParam + "&apikey=trilogy", {
-            "t": userCommandParam,
+var processOMDB = function (commandParam, callBack) {
+    axios.get('http://www.omdbapi.com/?t=' + commandParam + "&apikey=trilogy", {
+            "t": commandParam,
             "apikey": 'trilogy'
         })
         .then(function (response) {
@@ -96,18 +53,21 @@ var processOMDB = function (param) {
                 console.log('* Actors: ' + chalk.yellow(movieObject.Actors));
 
             }
+            if (callBack != null) {
+                callBack();
+            }
         })
         .catch(function (error) {
             console.log(error);
         });
 }
 
-var processSpotify = function (param) {
-    console.log(chalk.red("\r -- Searching Spotify DB for track '" + userCommandParam + "' -- \r"));
+var processSpotify = function (commandParam, callBack) {
+    console.log(chalk.red("\r -- Searching Spotify DB for track '" + commandParam + "' -- \r"));
     spotify
         .search({
             type: 'track',
-            query: userCommandParam
+            query: commandParam
         })
         .then(function (response) {
             //console.log(response);
@@ -121,29 +81,92 @@ var processSpotify = function (param) {
                 console.log('* Album: ' + chalk.yellow(trackObject.album.name));
 
             }
+            if (callBack != null) {
+                callBack();
+            }
         })
         .catch(function (err) {
             console.log(err);
         });
 }
 
-if (userCommand == 'spotify-this-song') {
-    if (userCommandParam == null || userCommandParam == '') {
-        userCommandParam = 'The Sign Ace Of Base';
-    }
-    processSpotify(userCommandParam);
+
+var captureCommand = function () {
+
+    var userCommand = '';
+    var userCommandParam = '';
+
+    process.argv.forEach(function (val, index, array) {
+        if (index == 2) {
+            userCommand = val;
+            if (validCommands.indexOf(userCommand) == -1) {
+                console.log(chalk.red('Oops! The command you chose is not valid. Use -help command to see available commands.'));
+                process.exit();
+            }
+            console.log('Command: ' + chalk.blue(userCommand));
+        }
+        if (index == 3) {
+            userCommandParam = val;
+            console.log('Param: ' + chalk.blue(userCommandParam));
+        }
+    });
+
+    dispatchCommand(userCommand, userCommandParam);
 }
 
-if (userCommand == 'concert-this') {
-    if (userCommandParam == null || userCommandParam == '') {
-        userCommandParam = 'Sting';
+var dispatchCommand = function (userCommand, userCommandParam, callBack) {
+
+    if (userCommand == '-help') {
+        console.log('Valid commands are: \r');
+        console.log(chalk.yellow('concert-this') + ' <artist/band name here>');
+        console.log(chalk.yellow('spotify-this-song') + '<song name here>');
+        console.log(chalk.yellow('movie-this') + ' <movie name here>');
+        console.log(chalk.yellow('do-what-it-says'));
     }
-    processBandsInTown(userCommandParam)
+
+    if (userCommand == 'do-what-it-says') {
+        fs.readFile('random.txt', "utf8", function (err, data) {
+
+            var lines = data.split('\n');
+            var instruction = '';
+            var param = '';
+
+            for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+
+                if (lines[lineIndex].split(',').length == 1) {
+                    instruction = lines[lineIndex].split(',')[0];
+                } else if (lines[lineIndex].split(',').length == 2) {
+                    instruction = lines[lineIndex].split(',')[0];
+                    param = lines[lineIndex].split(',')[1].replaceAll('"', '');
+                }
+
+                if (validCommands.indexOf(instruction) > -1) {
+                    dispatchCommand(instruction, param);
+                }
+            }
+        });
+    }
+
+    if (userCommand == 'spotify-this-song') {
+        if (userCommandParam == null || userCommandParam == '') {
+            userCommandParam = 'The Sign Ace Of Base';
+        }
+        processSpotify(userCommandParam, callBack);
+    }
+
+    if (userCommand == 'concert-this') {
+        if (userCommandParam == null || userCommandParam == '') {
+            userCommandParam = 'Sting';
+        }
+        processBandsInTown(userCommandParam, callBack)
+    }
+
+    if (userCommand == 'movie-this') {
+        if (userCommandParam == null || userCommandParam == '') {
+            userCommandParam = 'Mr. Nobody';
+        }
+        processOMDB(userCommandParam, callBack);
+    }
 }
 
-if (userCommand == 'movie-this') {
-    if (userCommandParam == null || userCommandParam == '') {
-        userCommandParam = 'Mr. Nobody';
-    }
-    processOMDB(userCommandParam);
-}
+captureCommand();

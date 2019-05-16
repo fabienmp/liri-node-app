@@ -7,6 +7,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "HELP",
+            "program": "${workspaceFolder}/liri.js",
+            "args": ["-help"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "DWIS",
             "program": "${workspaceFolder}/liri.js",
             "args": ["do-what-it-says"]
