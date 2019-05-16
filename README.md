@@ -10,11 +10,11 @@ This project is a simple LIRI Bot. LIRI is a Language Interpretation and Recogni
 * spotify-this-song
 
 ## Commands 
-### -help Command
+### -help
 
 This particular instruction provides the user with all the available commands and their respective format.
 
-### -do-what-it-says
+### do-what-it-says
 
 This command can be use to read a batch of instructions from the file 'random.txt' in the root folder. 
 There should not be more than one instruction per line.
@@ -53,3 +53,21 @@ This command takes in one parameter, a movie name. This will search the OMDB API
 * axios: Used to make GET requests to the OMDB, BandsInTown APIs.
 * node-spotify-api: Used to retrieve info about a song.
 
+## Debugging 
+
+A set of launch configurations are provided in order to quickly test all the features of this app.
+At the moment, the configuration file is only compatible with VS Code (https://code.visualstudio.com/).
+
+```
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "OMDB",
+            "program": "${workspaceFolder}/liri.js",
+            "args": ["movie-this", "Lion King"]
+        }
+```
+
+## Author
+
+Fabien Mansoubi - https://github.com/fabienmp
