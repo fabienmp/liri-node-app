@@ -1,2 +1,55 @@
-# LIRI Bot
-## UC Berkeley Extension : Homework #8
+# UC Berkeley Extension : Homework #8
+## LIRI Bot
+
+This project is a simple LIRI Bot. LIRI is a Language Interpretation and Recognition Interface. This is a command line node app that takes in parameters and gives you back data. In this particular app, we handle five different commands:
+
+* -help
+* do-what-it-says
+* concert-this
+* movie-this
+* spotify-this-song
+
+## Commands 
+### -help Command
+
+This particular instruction provides the user with all the available commands and their respective format.
+
+### -do-what-it-says
+
+This command can be use to read a batch of instructions from the file 'random.txt' in the root folder. 
+There should not be more than one instruction per line.
+
+### concert-this
+
+This command takes in one parameter, an artist/band name. This will search the Bands in Town Artist Events API and returns the following  data:
+
+* Name of the venue
+* Venue location
+* Date of the Event (use moment to format this as "MM/DD/YYYY")
+
+###  spotify-this-song
+
+This command takes in one parameter, a song title. This will search the Spotify API and returns the following data:
+
+* Artist(s)
+* The song's name
+* A preview link of the song from Spotify
+* The album that the song is from
+
+###  movie-this
+
+This command takes in one parameter, a movie name. This will search the OMDB API and returns the following data:
+
+* Artist(s)
+* The song's name
+* A preview link of the song from Spotify
+* The album that the song is from
+
+## Packages Used
+
+* winston: The winston module is used to log all the commands, parameters, errors and data results.
+* moment: This package was used to parse dates.
+* chalk: This package was used to color the console text.
+* axios: Used to make GET requests to the OMDB, BandsInTown APIs.
+* node-spotify-api: Used to retrieve info about a song.
+

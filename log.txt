@@ -1,0 +1,7 @@
+{"message":"Command: \u001b[94mspotify-this-song\u001b[39m","level":"info"}
+{"message":"Param: \u001b[94mlalala\u001b[39m","level":"info"}
+{"message":"\r -- Searching Spotify DB for track 'lalala' -- \r","level":"info"}
+{"message":"* Artist: Rico Nasty","level":"info"}
+{"message":"* Song Name: Guap (LaLaLa)","level":"info"}
+{"message":"* Preview URL: https://p.scdn.co/mp3-preview/99e732500fd127651934a0859a8633b9dde0deaa?cid=950f847e97964c7b8a87ab2558728e49","level":"info"}
+{"message":"* Album: Guap (LaLaLa)","level":"info"}

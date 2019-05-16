@@ -1,12 +1,19 @@
 require("dotenv").config();
-var keys = require("./keys.js");
 
-var axios = require('axios');
-var fs = require('fs');
+const keys = require("./keys.js");
+const axios = require('axios');
+const fs = require('fs');
 const moment = require('moment')
 const chalk = require('chalk');
-var Spotify = require('node-spotify-api');
-var spotify = new Spotify(keys.spotify);
+const Spotify = require('node-spotify-api');
+const spotify = new Spotify(keys.spotify);
+const winston = require('winston');
+const myWinstonOptions = {
+    transports: new winston.transports.File({
+        filename: './log.txt'
+    })
+}
+const logger = new winston.createLogger(myWinstonOptions)
 
 var validCommands = ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says', '-help'];
 
@@ -16,14 +23,20 @@ String.prototype.replaceAll = function (search, replacement) {
 };
 
 var processBandsInTown = function (commandParam, callBack) {
+    console.log(chalk.red("\r -- Searching BandsInTown for artist '" + commandParam + "' -- \r"));
+    logger.info("\r -- Searching OMDB for artist '" + commandParam + "' -- \r");
     axios.get('https://rest.bandsintown.com/artists/' + commandParam + '/events?app_id=codingbootcamp', {})
         .then(function (response) {
             //console.log(response);
             if (response != null && response.data.length > 0) {
                 var eventObject = response.data[0];
                 console.log('* Name of the venue: ' + chalk.yellow(eventObject.venue.name));
+                logger.info('* Name of the venue: ' + eventObject.venue.name);
                 console.log('* Venue location: ' + chalk.yellow(eventObject.venue.city + ", " + eventObject.venue.country));
+                logger.info('* Venue location: ' + eventObject.venue.city + ", " + eventObject.venue.country);
                 console.log('* Date of the Event: ' + chalk.yellow(moment(eventObject.datetime).format("MM/DD/YYYY")));
+                logger.info('* Date of the Event: ' + moment(eventObject.datetime).format("MM/DD/YYYY"));
+
             }
             if (callBack != null) {
                 callBack();
@@ -31,10 +44,13 @@ var processBandsInTown = function (commandParam, callBack) {
         })
         .catch(function (error) {
             console.log(error);
+            logger.error(error);
         });
 }
 
 var processOMDB = function (commandParam, callBack) {
+    console.log(chalk.red("\r -- Searching OMDB for movie '" + commandParam + "' -- \r"));
+    logger.info("\r -- Searching OMDB for movie '" + commandParam + "' -- \r");
     axios.get('http://www.omdbapi.com/?t=' + commandParam + "&apikey=trilogy", {
             "t": commandParam,
             "apikey": 'trilogy'
@@ -52,6 +68,14 @@ var processOMDB = function (commandParam, callBack) {
                 console.log('* Plot: ' + chalk.yellow(movieObject.Plot));
                 console.log('* Actors: ' + chalk.yellow(movieObject.Actors));
 
+                logger.info('* Title: ' + movieObject.Title);
+                logger.info('* Release Year: ' + movieObject.Year);
+                logger.info('* IMDB Rating: ' + movieObject.Ratings[0].Value);
+                logger.info('* Rotten Tomatoes Rating: ' +movieObject.Ratings[1].Value);
+                logger.info('* Country: ' + movieObject.Country);
+                logger.info('* Language: ' + movieObject.Language);
+                logger.info('* Plot: ' + movieObject.Plot);
+                logger.info('* Actors: ' + movieObject.Actors);
             }
             if (callBack != null) {
                 callBack();
@@ -59,11 +83,13 @@ var processOMDB = function (commandParam, callBack) {
         })
         .catch(function (error) {
             console.log(error);
+            logger.error(error);
         });
 }
 
 var processSpotify = function (commandParam, callBack) {
     console.log(chalk.red("\r -- Searching Spotify DB for track '" + commandParam + "' -- \r"));
+    logger.info("\r -- Searching Spotify DB for track '" + commandParam + "' -- \r");
     spotify
         .search({
             type: 'track',
@@ -80,6 +106,12 @@ var processSpotify = function (commandParam, callBack) {
                 console.log('* Preview URL: ' + chalk.yellow(trackObject.preview_url));
                 console.log('* Album: ' + chalk.yellow(trackObject.album.name));
 
+                if (trackObject.artists.length > 0)
+                    logger.info('* Artist: ' + trackObject.artists[0].name);
+                logger.info('* Song Name: ' + trackObject.name);
+                logger.info('* Preview URL: ' + trackObject.preview_url);
+                logger.info('* Album: ' + trackObject.album.name);
+
             }
             if (callBack != null) {
                 callBack();
@@ -87,6 +119,7 @@ var processSpotify = function (commandParam, callBack) {
         })
         .catch(function (err) {
             console.log(err);
+            logger.error(err);
         });
 }
 
@@ -101,13 +134,16 @@ var captureCommand = function () {
             userCommand = val;
             if (validCommands.indexOf(userCommand) == -1) {
                 console.log(chalk.red('Oops! The command you chose is not valid. Use -help command to see available commands.'));
+                logger.info('Oops! The command you chose is not valid. Use -help command to see available commands.');
                 process.exit();
             }
             console.log('Command: ' + chalk.blue(userCommand));
+            logger.info('Command: ' + chalk.blue(userCommand));
         }
         if (index == 3) {
             userCommandParam = val;
             console.log('Param: ' + chalk.blue(userCommandParam));
+            logger.info('Param: ' + chalk.blue(userCommandParam));
         }
     });
 
@@ -122,6 +158,12 @@ var dispatchCommand = function (userCommand, userCommandParam, callBack) {
         console.log(chalk.yellow('spotify-this-song') + '<song name here>');
         console.log(chalk.yellow('movie-this') + ' <movie name here>');
         console.log(chalk.yellow('do-what-it-says'));
+
+        logger.info('Valid commands are: \r');
+        logger.info('concert-this' + ' <artist/band name here>');
+        logger.info('spotify-this-song' + '<song name here>');
+        logger.info('movie-this' + ' <movie name here>');
+        logger.info('do-what-it-says');
     }
 
     if (userCommand == 'do-what-it-says') {
